@@ -102,12 +102,20 @@ def get_coins(user: User = Depends(fastapi_users.get_current_user)):
     return {'coins': user.coins}
 
 @app.get("/buy_history")
-def buy_history(user: User = Depends(fastapi_users.get_current_user)):
-    return transaction_collection.find({"target": user.email})
+async def buy_history(user: User = Depends(fastapi_users.get_current_user)):
+    transactions = await transaction_collection.find({"target": user.email}).to_list(length=None)
+    for transaction in transactions:
+        del transaction["_id"]
+
+    return transactions
 
 @app.get("/sell_history")
 def sell_history(user: User = Depends(fastapi_users.get_current_user)):
-    return transaction_collection.find({"source": user.email})
+    transactions = transaction_collection.find({"source": user.email}).to_list(length=None)
+    for transaction in transactions:
+        del transaction["_id"]
+
+    return transactions
 
 @app.post("/get_transaction")
 async def get_transaction(token: str, user: User = Depends(fastapi_users.get_current_user)):
