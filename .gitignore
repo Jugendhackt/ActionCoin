@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Exclude Node_Modules [install using 'npm install']
+/frontend/node_modules

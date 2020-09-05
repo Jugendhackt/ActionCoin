@@ -1,0 +1,16 @@
+[
+  {
+    "name": "test",
+    "path": "/test",
+    "component": "S:\\\\JH_Halle\\\\frontend\\\\pages\\\\test.vue",
+    "chunkName": "pages/test",
+    "_name": "_9a7c5898"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "S:\\\\JH_Halle\\\\frontend\\\\pages\\\\index.vue",
+    "chunkName": "pages/index",
+    "_name": "_836343c0"
+  }
+]
