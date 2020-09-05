@@ -19,12 +19,12 @@ cd backend/fastapi-users
 ### Run:
 Frontend:
 ```shell
-cd backend/fastapi-users
+cd frontend
 npm run dev
 ```
 
 Backend:
 ```shell
-cd frontend
+cd backend/fastapi-users
 uvicorn main:app --reload
 ```
