@@ -54,7 +54,26 @@ export default {
     'bootstrap-vue/nuxt',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/auth',
   ],
+  // Auth module config
+  auth: {
+    strategies: {
+      local: {
+        token: {
+          property: 'token',
+          // required: true,
+          // type: 'Bearer'
+        },
+        endpoints: {
+          login: {url: '/auth/jwt/login', method: 'post', propertyName: 'access_token'},
+          logout: false,
+          user: {url: '/users/me', method: 'get', propertyName: false}
+        },
+        globalToken: true
+      },
+    },
+  },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
