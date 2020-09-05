@@ -1,16 +1,26 @@
 [
   {
+    "name": "login",
+    "path": "/login",
+    "component": "S:\\\\JH_Halle\\\\actioncoin\\\\frontend\\\\pages\\\\login.vue",
+    "chunkName": "pages/login"
+  },
+  {
+    "name": "register",
+    "path": "/register",
+    "component": "S:\\\\JH_Halle\\\\actioncoin\\\\frontend\\\\pages\\\\register.vue",
+    "chunkName": "pages/register"
+  },
+  {
     "name": "test",
     "path": "/test",
-    "component": "S:\\\\JH_Halle\\\\frontend\\\\pages\\\\test.vue",
-    "chunkName": "pages/test",
-    "_name": "_9a7c5898"
+    "component": "S:\\\\JH_Halle\\\\actioncoin\\\\frontend\\\\pages\\\\test.vue",
+    "chunkName": "pages/test"
   },
   {
     "name": "index",
     "path": "/",
-    "component": "S:\\\\JH_Halle\\\\frontend\\\\pages\\\\index.vue",
-    "chunkName": "pages/index",
-    "_name": "_836343c0"
+    "component": "S:\\\\JH_Halle\\\\actioncoin\\\\frontend\\\\pages\\\\index.vue",
+    "chunkName": "pages/index"
   }
 ]
