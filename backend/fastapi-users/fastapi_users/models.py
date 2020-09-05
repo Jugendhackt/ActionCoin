@@ -19,7 +19,7 @@ class BaseUser(CreateUpdateDictModel):
     """Base User model."""
 
     id: Optional[UUID4] = None
-    email: Optional[EmailStr] = None
+    email: Optional[str] = None
     is_active: Optional[bool] = True
     is_superuser: Optional[bool] = False
 
@@ -29,7 +29,7 @@ class BaseUser(CreateUpdateDictModel):
 
 
 class BaseUserCreate(CreateUpdateDictModel):
-    email: EmailStr
+    email: str
     password: str
 
 
