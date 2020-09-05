@@ -130,3 +130,32 @@ dmypy.json
 
 # Exclude Node_Modules [install using 'npm install']
 /frontend/node_modules
+frontend/.nuxt
+frontend/.nuxt/App.js
+frontend/.nuxt/axios.js
+frontend/.nuxt/bootstrap-vue.js
+frontend/.nuxt/client.js
+frontend/.nuxt/empty.js
+frontend/.nuxt/index.js
+frontend/.nuxt/jsonp.js
+frontend/.nuxt/loading.html
+frontend/.nuxt/middleware.js
+frontend/.nuxt/router.js
+frontend/.nuxt/router.scrollBehavior.js
+frontend/.nuxt/routes.json
+frontend/.nuxt/server.js
+frontend/.nuxt/utils.js
+frontend/.nuxt/components/index.js
+frontend/.nuxt/components/nuxt-build-indicator.vue
+frontend/.nuxt/components/nuxt-child.js
+frontend/.nuxt/components/nuxt-error.vue
+frontend/.nuxt/components/nuxt-link.client.js
+frontend/.nuxt/components/nuxt-link.server.js
+frontend/.nuxt/components/nuxt-loading.vue
+frontend/.nuxt/components/nuxt.js
+frontend/.nuxt/components/plugin.js
+frontend/.nuxt/mixins/fetch.client.js
+frontend/.nuxt/mixins/fetch.server.js
+frontend/.nuxt/vetur/tags.json
+frontend/.nuxt/views/app.template.html
+frontend/.nuxt/views/error.html
