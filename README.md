@@ -36,5 +36,5 @@ nix-shell
 ### Run
 
 ```shell
-uvicorn main:app --reload
+python -m uvicorn main:app --reload
 ```
