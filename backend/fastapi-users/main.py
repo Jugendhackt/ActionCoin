@@ -1,4 +1,5 @@
 import os
+import time
 
 import motor.motor_asyncio
 from fastapi import FastAPI, Request, Header, HTTPException
@@ -117,34 +118,44 @@ async def sell_history(user: User = Depends(fastapi_users.get_current_user)):
 
     return transactions
 
-@app.post("/get_transaction")
+@app.get("/get_transaction")
 async def get_transaction(token: str, user: User = Depends(fastapi_users.get_current_user)):
     transaction = await transaction_collection.find_one({"token": token})
+    if transaction == None:
+        return {"information": "transaction not found"}
+
     del transaction["_id"]
     return transaction
 
 @app.post("/create_transaction")
 def create_transaction(content: list, user: User = Depends(fastapi_users.get_current_user)):
     token = ''.join(__import__("random").choice(__import__("string").ascii_lowercase) for i in range(4))
-    transaction_collection.insert_one({"token": token, "source": user.email, "target": "", "status":"pending", "content": content})
+    transaction_collection.insert_one({"token": token, "source": user.email, "target": "", "status":"pending", "time": int(time.time()), "content": content})
     return token
 
 @app.post("/accept_transaction")
 async def accept_transaction(token: str, user: User = Depends(fastapi_users.get_current_user)):
     transaction = await transaction_collection.find_one({"token": token})
+
+    if transaction == None:
+        return {"information": "transaction not found"}
+
     del transaction["_id"]
 
     cost = 0
     for content_index in transaction["content"]:
         cost = content_index["amount"] * content_index["cost"]
 
-    if cost > user_coins:
+    if cost > user.coins:
         return {"information": "not enough money"}
 
     user.coins = user.coins - cost
-    await user_collection.update_one({"email": transaction['source']}, {"$set": {"coins": user_coins + cost}})
+    # jumk
+    trader = await user_collection.find_one({"email": transaction['source']})
+    await user_collection.update_one(trader, {"$set": {"coins": trader['coins'] + cost}})
+    await user_collection.update_one(user, {"$set": {"coins": user.coins - cost}})
 
-    await transaction_collection.update_one({"token": token}, {"$set": {"status": "done", "target": user.email, "token": ""}})
+    await transaction_collection.update_one({"token": token}, {"$set": {"status": "done", "target": user.email, "token": "", "time": int(time.time())}})
 
     return {}
 

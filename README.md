@@ -1,6 +1,6 @@
 # ActionCoin
 
-### Installation
+### Install
 Frontend:
 ```shell
 > Install NodeJs
