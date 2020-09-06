@@ -144,10 +144,8 @@ async def accept_transaction(token: str, user: User = Depends(fastapi_users.get_
         return {"information": "invalid token"}
 
     transaction = await transaction_collection.find_one({"token": token})
-
     if transaction == None:
         return {"information": "transaction not found"}
-
     del transaction["_id"]
 
     cost = 0
@@ -158,10 +156,9 @@ async def accept_transaction(token: str, user: User = Depends(fastapi_users.get_
         transaction_collection.delete_one({"token": token})
         return {"information": "not enough money"}
 
-    user.coins = user.coins - cost
-    # jumk
     trader = await user_collection.find_one({"email": transaction['source']})
     await user_collection.update_one(trader, {"$set": {"coins": trader['coins'] + cost}})
+
     await user_collection.update_one(user, {"$set": {"coins": user.coins - cost}})
 
     await transaction_collection.update_one({"token": token}, {"$set": {"status": "done", "target": user.email, "token": "", "time": int(time.time())}})
