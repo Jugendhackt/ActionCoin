@@ -120,6 +120,9 @@ async def sell_history(user: User = Depends(fastapi_users.get_current_user)):
 
 @app.get("/get_transaction")
 async def get_transaction(token: str, user: User = Depends(fastapi_users.get_current_user)):
+    if token == "":
+        return {"information": "invalid token"}
+        
     transaction = await transaction_collection.find_one({"token": token})
     if transaction == None:
         return {"information": "transaction not found"}
