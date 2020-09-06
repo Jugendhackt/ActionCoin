@@ -159,3 +159,6 @@ frontend/.nuxt/mixins/fetch.server.js
 frontend/.nuxt/vetur/tags.json
 frontend/.nuxt/views/app.template.html
 frontend/.nuxt/views/error.html
+
+# direnv
+.direnv
