@@ -1,7 +1,9 @@
 # ActionCoin
 
-### Install
-Frontend:
+## Frontend
+
+### Installation
+
 ```shell
 > Install NodeJs
 > Install NPM
@@ -9,21 +11,31 @@ cd frontend
 npm install
 ```
 
-Backend:
+### Run
+
+```shell
+cd frontend
+npm run dev
+```
+
+###Backend
+
+### Installation
+
 ```shell
 pip install uvicorn
 pip install fastapi-users[mongodb]
 cd backend/fastapi-users
 ```
 
-### Run:
-Frontend:
-```shell
-cd frontend
-npm run dev
-```
+*Alternative approach for Nix/NixOS*
 
-Backend:
+```shell
+cd backend/fastapi-users
+nix-shell
+```
+### Run
+
 ```shell
 cd backend/fastapi-users
 uvicorn main:app --reload
