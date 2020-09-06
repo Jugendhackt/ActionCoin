@@ -47,11 +47,14 @@ class UserDB(User, models.BaseUserDB):
 client = motor.motor_asyncio.AsyncIOMotorClient(
     DATABASE_URL, uuidRepresentation="standard"
 )
-db = client["actioncoin"]
-user_collection = db["users"]
-transaction_collection = db["transactions"]
-user_db = MongoDBUserDatabase(UserDB, user_collection)
 
+db = client["actioncoin"]
+
+transaction_collection = db["transactions"]
+item_collection = db["items"]
+
+user_collection = db["users"]
+user_db = MongoDBUserDatabase(UserDB, user_collection)
 
 def on_after_register(user: UserDB, request: Request):
     print(f"User {user.id} has registered.")
@@ -132,7 +135,7 @@ async def get_transaction(token: str, user: User = Depends(fastapi_users.get_cur
 
 @app.post("/create_transaction")
 def create_transaction(content: list, user: User = Depends(fastapi_users.get_current_user)):
-    if !user.is_superuser:
+    if user.is_superuser == False:
         return {"information": "permission denied"}
     token = ''.join(__import__("random").choice(__import__("string").ascii_lowercase) for i in range(4))
     transaction_collection.insert_one({"token": token, "source": user.email, "target": "", "status":"pending", "time": int(time.time()), "content": content})
@@ -170,3 +173,31 @@ def decline_transaction(token: str, user: User = Depends(fastapi_users.get_curre
     if token == "":
         return {"information": "invalid token"}
     transaction_collection.delete_one({"token": token})
+
+@app.post("/create_item")
+def create_item(name: str, cost: int, user: User = Depends(fastapi_users.get_current_user)):
+    if user.is_superuser == False:
+        return {"information": "permission denied"}
+
+    if item_collection.find_one({"username": user.email, "itemname": name}) != None:
+        return {"information": "item already exists"}
+
+    item_collection.insert_one({"username": user.email, "itemname": name, "cost": cost})
+
+@app.get("/get_items")
+async def get_items(user: User = Depends(fastapi_users.get_current_user)):
+    if user.is_superuser == False:
+        return {"information": "permission denied"}
+
+    items = await item_collection.find({"username": user.email}).to_list(length=None)
+    for item in items:
+        del item["_id"]
+
+    return items
+
+@app.post("/delete_item")
+def delete_item(name: str, user: User = Depends(fastapi_users.get_current_user)):
+    if user.is_superuser == False:
+        return {"information": "permission denied"}
+
+    item_collection.delete_one({"username": user.email, "itemname": name})
