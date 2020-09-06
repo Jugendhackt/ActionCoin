@@ -14,7 +14,6 @@ npm install
 ### Run
 
 ```shell
-cd frontend
 npm run dev
 ```
 
@@ -37,6 +36,5 @@ nix-shell
 ### Run
 
 ```shell
-cd backend/fastapi-users
 uvicorn main:app --reload
 ```
