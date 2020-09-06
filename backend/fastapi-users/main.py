@@ -122,7 +122,7 @@ async def sell_history(user: User = Depends(fastapi_users.get_current_user)):
 async def get_transaction(token: str, user: User = Depends(fastapi_users.get_current_user)):
     if token == "":
         return {"information": "invalid token"}
-        
+
     transaction = await transaction_collection.find_one({"token": token})
     if transaction == None:
         return {"information": "transaction not found"}
@@ -138,6 +138,9 @@ def create_transaction(content: list, user: User = Depends(fastapi_users.get_cur
 
 @app.post("/accept_transaction")
 async def accept_transaction(token: str, user: User = Depends(fastapi_users.get_current_user)):
+    if token == "":
+        return {"information": "invalid token"}
+
     transaction = await transaction_collection.find_one({"token": token})
 
     if transaction == None:
@@ -150,6 +153,7 @@ async def accept_transaction(token: str, user: User = Depends(fastapi_users.get_
         cost = content_index["amount"] * content_index["cost"]
 
     if cost > user.coins:
+        transaction_collection.delete_one({"token": token})
         return {"information": "not enough money"}
 
     user.coins = user.coins - cost
@@ -164,4 +168,6 @@ async def accept_transaction(token: str, user: User = Depends(fastapi_users.get_
 
 @app.post("/decline_transaction")
 def decline_transaction(token: str, user: User = Depends(fastapi_users.get_current_user)):
+    if token == "":
+        return {"information": "invalid token"}
     transaction_collection.delete_one({"token": token})
