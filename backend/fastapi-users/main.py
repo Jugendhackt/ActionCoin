@@ -132,6 +132,8 @@ async def get_transaction(token: str, user: User = Depends(fastapi_users.get_cur
 
 @app.post("/create_transaction")
 def create_transaction(content: list, user: User = Depends(fastapi_users.get_current_user)):
+    if !user.is_superuser:
+        return {"information": "permission denied"}
     token = ''.join(__import__("random").choice(__import__("string").ascii_lowercase) for i in range(4))
     transaction_collection.insert_one({"token": token, "source": user.email, "target": "", "status":"pending", "time": int(time.time()), "content": content})
     return token
