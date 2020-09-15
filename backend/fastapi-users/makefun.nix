@@ -1,6 +1,7 @@
 { lib, buildPythonPackage, setuptools_scm, fetchPypi, pymongo, pytest
 , pytestrunner, setuptools, six }:
 
+
 buildPythonPackage rec {
   pname = "makefun";
   version = "1.9.3";
@@ -14,13 +15,7 @@ buildPythonPackage rec {
   nativeBuildInputs = [ pytestrunner setuptools_scm six ];
   propagatedBuildInputs = [ setuptools pymongo ];
 
-  buildPhase = "";
-
   doCheck = false;
-  checkInputs = [ pytest ];
-  checkPhase = ''
-    py.test -k 'not function_name and not other_function' tests
-  '';
 
   meta = with lib; {
     homepage = "https://github.com/smarie/python-makefun";
